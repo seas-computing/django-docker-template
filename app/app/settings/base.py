@@ -77,7 +77,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        # "ENGINE": "django.db.backends.postgresql",
         "NAME": environ.get("SQL_DATABASE", path.join(BASE_DIR, "db.sqlite3")),
         "USER": environ.get("SQL_USER", "user"),
         "PASSWORD": environ.get("SQL_PASSWORD", "password"),
@@ -123,4 +122,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+MEDIA_ROOT = path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
