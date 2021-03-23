@@ -3,7 +3,7 @@
 /*/settings/local.py
 /static/
 /media/
-/db.sqlite3
+/*/db.sqlite3
 /node_modules
 /.sass-cache
 *.log
