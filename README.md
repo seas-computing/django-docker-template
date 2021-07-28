@@ -29,4 +29,5 @@ The repo also contains docker config to run using the production settings. This 
   * Otherwise you will end up with a sqlite3 database (see `app/app/settings/base.py` for database config).
   * Note that even if you opt for sqlite3, the docker compose file will still create a Postgres container.
   * From the parent directory, run `docker-compose -f docker-compose.prod.yml up -d --build`
-* Once the containers have been built, go to `localhost:1337`
+* Once the containers have been built, go to `localhost:1337/admin`
+  * You will get a "Not found" error at the root address. This is expected as there are no roots or templates set up.
