@@ -15,7 +15,8 @@ ENV PYTHONUNBUFFERED 1
 # install psycopg2 dependencies
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev \
-    musl-dev bash libffi-dev zlib zlib-dev make jpeg jpeg-dev
+    musl-dev bash libffi-dev zlib zlib-dev make 
+    # jpeg jpeg-dev
 
 # lint
 COPY . /usr/src/app/
@@ -46,14 +47,15 @@ WORKDIR $APP_HOME
 # install dependencies
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev \
-    musl-dev bash libffi-dev zlib zlib-dev make jpeg jpeg-dev
+    musl-dev bash libffi-dev zlib zlib-dev make 
+    # jpeg jpeg-dev
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 
-# copy entrypoint-prod.sh
-COPY ./entrypoint.prod.sh $APP_HOME
+# # copy entrypoint-prod.sh
+# COPY ./entrypoint.prod.sh $APP_HOME
 
 # copy project
 COPY . $APP_HOME
