@@ -4,34 +4,38 @@ services:
   web:
     build:
       context: ./app
-      dockerfile: Dockerfile.prod
-    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000
+      dockerfile: Dockerfile
+    command: ["--production"]
     volumes:
-      - static_volume:/home/app/web/app/static
-      - media_volume:/home/app/web/app/media
+      - static_volume_prod:/home/app/web/app/static
+      - media_volume_prod:/home/app/web/app/media
     expose:
       - 8000
     env_file:
-      - ./.env.prod
-    depends_on:
-      - db
+      - ./.env
+    environment:
+      DEBUG: 0
+      DJANGO_SETTINGS_MODULE: app.settings.production
+      SQL_HOST: db
+
   db:
     image: postgres:12.0-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env.prod
-  nginx:
+      - postgres_data_prod:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: ${SQL_PASSWORD}
+      POSTGRES_USER: ${SQL_USER}
+      POSTGRES_DB: ${SQL_DATABASE}
+
+  nginx_prod:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/app/static
-      - media_volume:/home/app/web/app/media
+      - static_volume_prod:/home/app/web/app/static
+      - media_volume_prod:/home/app/web/app/media
     ports:
-      - 1337:80
-    depends_on:
-      - web
+      - 127.0.0.1:1337:80
 
 volumes:
-  postgres_data:
-  static_volume:
-  media_volume:
+  postgres_data_prod:
+  static_volume_prod:
+  media_volume_prod:
