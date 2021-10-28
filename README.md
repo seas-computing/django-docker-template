@@ -95,7 +95,7 @@ $ docker run -it --rm --network django-docker-template_default -p 127.0.0.1:8001
 $ docker run -it --rm --network django-docker-template_default -p 127.0.0.1:8001:8000 --env-file .env django-docker-template_web --development
 ```
 
-You can also create new `EXEC_MODE` flags, configured in the `entrypoint.sh` file, again to enable specific tasks. For example, for reindexing the directory screens. See the [`entrypoint.sh`](directory_entrypoint.sh) file in the Directory Screens project for an example of this implementation.
+You can also create new `EXEC_MODE` flags, configured in the `entrypoint.sh` file, again to enable specific tasks. For example, for reindexing the directory screens. See the [`entrypoint.sh`][directory_entrypoint.sh] file in the Directory Screens project for an example of this implementation.
 
 
 With no arguments, the image will default to running in production mode.
