@@ -83,27 +83,21 @@ $ docker run -it --rm --env-file .env ghcr.io/seas-computing/sec-directory-serve
 
 When running the container with an additional shell command like this, the [`app/entrypoint.sh` script](app/entrypoint.sh) will not run the `gunicorn` or development server processes; it will run the command specified, within the `/app` directory in the container. If the `DATABASE` environment variable is set to `postgres`, it will wait for the database defined by `SQL_HOST` and `SQL_PORT` to become available before proceeding.
 
-You can also force a container built to the **production** `Dockerfile` stage to run in production or development mode by passing `--production` or `--development` as the **only** arguments. Note that when running the tasks like this, Postgres and/or Nginx containers will already need to exist, and you will need to pass the existing docker network in as a parameter.  For example:
+You can also force a container to run in production or development mode by passing `--production` or `--development` as the **only** arguments. Note that when running the tasks like this, Postgres and/or Nginx containers will already need to exist, and you will need to pass the existing docker network and a port mapping in as a parameters. For example:
 
 ```sh
 # For Production mode
-$ docker run -it --rm --network django-docker-template_default --env-file .env django-docker-template_web --production
+$ docker run -it --rm --network django-docker-template_default -p 127.0.0.1:8001:8000 --env-file .env django-docker-template_web --production
 
 # For Development mode
-$ docker run -it --rm --env-file .env django-docker-template_web --development
+$ docker run -it --rm --network django-docker-template_default -p 127.0.0.1:8001:8000 --env-file .env django-docker-template_web --development
 ```
 
-You can also create new `EXEC_MODE` flags, again to enable specific tasks. For example, for reindexing the directory screens:
+You can also create new `EXEC_MODE` flags, configured in the `entrypoint.sh` file, again to enable specific tasks. For example, for reindexing the directory screens. See the [`entrypoint.sh`](directory_entrypoint.sh) file in the Directory Screens project for an example of this implementation.
 
-```
-# Shortcut to run the re-indexing command
-$ docker run -it --rm --env-file .env django-docker-template_web --reindex
-```
-
-These `EXEC_MODE` flags are configured in the `entrypoint.sh` file.
 
 With no arguments, the image will default to running in production mode.
 
-You can launch docker containers built to the **development** stage in this fashion, but you would need to also pass in a mount point to enable the container to find the entrypoint file.
 
 [actions]: https://github.com/seas-computing/django-docker-template/actions
+[directory_entrypoint.sh]: https://github.com/seas-computing/sec-directory-server/blob/main/app/entrypoint.sh
