@@ -12,4 +12,5 @@
 *.sql
 *.db
 /Env/
-.env.*
+.env*
+
