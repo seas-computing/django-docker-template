@@ -4,7 +4,9 @@ This repo contains a base template for running Django on Docker, in both develop
 
 ## Using this template
 
-In order to use this template, clone the repo, remove the existing remote origin, and add a new remote for the new project repo.
+In order to use this template, click the "Use this template" button in the GitHub UI. 
+
+Alternatively, you can clone the repo, remove the existing remote origin, and add a new remote for the new project repo.
 
 ```
 $ git remote rm origin
